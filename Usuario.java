@@ -1,26 +1,39 @@
 import java.util.ArrayList;
 
 public class Usuario {
-    String nome;
-    ArrayList<Playlist> playlists = new ArrayList<>();
+    private String nome;
+    private ArrayList<Playlist> playlists;
 
-    void criarPlaylist(String nome) {
-        Playlist nova = new Playlist();
-        nova.nome = nome;
-        this.playlists.add(nova);
+    public Usuario() {
+        this.playlists = new ArrayList<>();
     }
 
-    Playlist getPlaylist(int indice) {
-        if (indice >= 0 && indice < this.playlists.size()) {
-            return this.playlists.get(indice);
+    public Usuario(String nome) {
+        this();
+        setNome(nome);
+    }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) {
+        if (nome != null && !nome.trim().isEmpty()) {
+            this.nome = nome;
+        }
+    }
+
+    public ArrayList<Playlist> getPlaylists() { return playlists; }
+
+    public void adicionarPlaylist(Playlist p) {
+        if (p != null) {
+            this.playlists.add(p);
+        }
+    }
+
+    public Playlist buscarPlaylist(String nomeBusca) {
+        for (Playlist p : playlists) {
+            if (p.getNome().equalsIgnoreCase(nomeBusca)) {
+                return p;
+            }
         }
         return null;
-    }
-
-    void listarPlaylists() {
-        System.out.println("\n--- Playlists de " + this.nome + " ---");
-        for (int i = 0; i < this.playlists.size(); i++) {
-            System.out.println(i + " - " + this.playlists.get(i).nome);
-        }
     }
 }

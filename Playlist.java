@@ -1,36 +1,48 @@
 import java.util.ArrayList;
 
 public class Playlist {
-    String nome;
-    ArrayList<Musica> musicas = new ArrayList<>();
+    private String nome;
+    private ArrayList<Musica> musicas;
 
-    void adicionarMusica(Musica musica) {
-        this.musicas.add(musica);
+    public Playlist() {
+        this.musicas = new ArrayList<>();
     }
 
-    void removerMusica(int indice) {
-        if (indice >= 0 && indice < this.musicas.size()) {
+    public Playlist(String nome) {
+        this();
+        setNome(nome);
+    }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) {
+        if (nome != null && !nome.trim().isEmpty()) {
+            this.nome = nome.trim();
+        }
+    }
+
+    public ArrayList<Musica> getMusicas() { return musicas; }
+
+    public void adicionarMusica(Musica m) {
+        if (m != null) {
+            this.musicas.add(m);
+        }
+    }
+
+    public void removerMusica(int indice) {
+        if (indice >= 0 && indice < musicas.size()) {
             this.musicas.remove(indice);
         }
     }
 
-    void listarMusicas() {
-        System.out.println("\n--- PLAYLIST: " + this.nome + " ---");
-        for (int i = 0; i < this.musicas.size(); i++) {
-            System.out.print(i + ". ");
-            this.musicas.get(i).exibir();
+    public void exibirPlaylist() {
+        System.out.println("\n--- PLAYLIST: " + nome + " ---");
+        if (musicas.isEmpty()) {
+            System.out.println("Playlist vazia.");
+        } else {
+            for (int i = 0; i < musicas.size(); i++) {
+                System.out.print((i + 1) + ". ");
+                musicas.get(i).exibirDados();
+            }
         }
-    }
-
-    int getDuracaoTotal() {
-        int total = 0;
-        for (Musica m : this.musicas) {
-            total += m.duracaoSegundos;
-        }
-        return total;
-    }
-
-    int getQuantidadeMusicas() {
-        return this.musicas.size();
     }
 }

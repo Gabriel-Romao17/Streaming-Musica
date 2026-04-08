@@ -1,64 +1,54 @@
 public class Musica {
-
     private String titulo;
     private String artista;
-    private int duracao;
+    private int duracao; // em segundos
     private String genero;
 
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getArtista() {
-        return artista;
-    }
-
-    public void setArtista(String artista) {
-        this.artista = artista;
-    }
-
-    public int getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public Musica() {
-        
-    } 
+    public Musica() {}
 
     public Musica(String titulo, String artista, int duracao, String genero) {
-        this.titulo = titulo;
-        this.artista = artista;
-        this.duracao = duracao;
-        this.genero = genero;
+        setTitulo(titulo);
+        setArtista(artista);
+        setDuracao(duracao);
+        setGenero(genero);
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) {
+        if (titulo != null && !titulo.trim().isEmpty()) {
+            this.titulo = titulo.trim();
+        }
     }
 
-    public void exibir() {
-        System.out.println("Título: " + titulo);
-        System.out.println("Artista: " + artista);
-        System.out.println("Duração: " + formatarDuracao(duracao));
-        System.out.println("Gênero: " + genero);
+    public String getArtista() { return artista; }
+    public void setArtista(String artista) {
+        if (artista != null && !artista.trim().isEmpty()) {
+            this.artista = artista.trim();
+        }
     }
 
-    private String formatarDuracao(int segundos) {
-        int min = segundos / 60;
-        int seg = segundos % 60;
-        return String.format("%d:%02d", min, seg);
+    public int getDuracao() { return duracao; }
+    public void setDuracao(int duracao) {
+        // Ajustado para o intervalo solicitado nas imagens (1 a 60 min)
+        if (duracao >= 60 && duracao <= 3600) {
+            this.duracao = duracao;
+        }
+    }
+
+    public String getGenero() { return genero; }
+    public void setGenero(String genero) {
+        String[] validos = {"Pop", "Rock", "Jazz", "Eletrônica", "Hip-Hop", "Clássica"};
+        for (String v : validos) {
+            if (v.equalsIgnoreCase(genero)) {
+                this.genero = v;
+                break;
+            }
+        }
+    }
+
+    public void exibirDados() {
+        int min = duracao / 60;
+        int seg = duracao % 60;
+        System.out.printf("%s - %s [%s] (%d:%02d)\n", titulo, artista, genero, min, seg);
     }
 }
